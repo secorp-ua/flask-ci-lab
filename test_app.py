@@ -25,6 +25,4 @@ def test_info(client):
     data = response.get_json()
     assert 'version' in data
     
-def test_broken(client):
-    response = client.get('/')
-    assert response.status_code == 404  # Навмисна помилка!
+

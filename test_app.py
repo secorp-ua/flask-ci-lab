@@ -28,8 +28,8 @@ def test_info(client):
     assert response.status_code == 200
     data = response.get_json()
     assert 'version' in data
-    
 
-def test_protection_check(client):
+
+def test_not_found(client):
     response = client.get('/nonexistent')
-    assert response.status_code == 200  # Впаде — ендпоінта не існує
+    assert response.status_code == 404

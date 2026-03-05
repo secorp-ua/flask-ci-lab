@@ -28,7 +28,7 @@ def test_info(client):
     assert response.status_code == 200
     data = response.get_json()
     assert 'version' in data
-    
+
 
 def test_not_found(client):
     response = client.get('/nonexistent')

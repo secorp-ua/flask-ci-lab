@@ -20,5 +20,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Install linter
+        run: pip install flake8
+
+      - name: Lint with flake8
+        run: flake8 app.py test_app.py --max-line-length=120
+
       - name: Run tests
         run: pytest -v
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t flask-ci-lab:${{ github.sha }} .
+
+      - name: Verify image created
+        run: docker images flask-ci-lab

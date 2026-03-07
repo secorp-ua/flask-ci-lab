@@ -21,6 +21,14 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
 
+      - name: Lint with Ruff
+        run: ruff check .
+
+      - name: Check formatting
+        run: black --check .
+
+      - name: Run tests with coverage
+        run: pytest --cov --cov-fail-under=70
       - name: Install dependencies
         run: pip install -r requirements.txt
 

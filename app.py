@@ -1,26 +1,29 @@
-from flask import Flask, jsonify
 import os
+
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def hello():
-    return jsonify({"message": "Hello, CI/CD!"})
+    return jsonify({"message": "Hello, DevOps!"})
 
 
-@app.route('/health')
+@app.route("/health")
 def health():
     return jsonify({"status": "healthy"})
 
 
-@app.route('/info')
+@app.route("/info")
 def info():
-    return jsonify({
-        "version": os.getenv("APP_VERSION", "1.0.0"),
-        "environment": os.getenv("ENVIRONMENT", "development")
-    })
+    return jsonify(
+        {
+            "version": os.getenv("APP_VERSION", "1.0.0"),
+            "environment": os.getenv("ENVIRONMENT", "development"),
+        }
+    )
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

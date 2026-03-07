@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -21,6 +21,21 @@ def info():
         {
             "version": os.getenv("APP_VERSION", "1.0.0"),
             "environment": os.getenv("ENVIRONMENT", "development"),
+        }
+    )
+
+
+@app.route("/api/echo")
+def echo():
+    message = request.args.get("message")
+
+    if message is None:
+        return jsonify({"error": "message parameter is required"}), 400
+
+    return jsonify(
+        {
+            "echo": message,
+            "length": len(message),
         }
     )
 

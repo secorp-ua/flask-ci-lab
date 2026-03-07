@@ -54,3 +54,35 @@ def test_method_not_allowed(client):
     """POST на GET-only endpoint повертає 405."""
     response = client.post("/")
     assert response.status_code == 405
+
+
+def test_echo_success(client):
+    """GET /api/echo з параметром message."""
+    response = client.get("/api/echo?message=hello")
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["echo"] == "hello"
+    assert data["length"] == 5
+
+
+def test_echo_missing_parameter(client):
+    """GET /api/echo без message."""
+    response = client.get("/api/echo")
+
+    assert response.status_code == 400
+
+    data = response.get_json()
+    assert data["error"] == "message parameter is required"
+
+
+def test_echo_empty_message(client):
+    """GET /api/echo з порожнім рядком."""
+    response = client.get("/api/echo?message=")
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["echo"] == ""
+    assert data["length"] == 0
